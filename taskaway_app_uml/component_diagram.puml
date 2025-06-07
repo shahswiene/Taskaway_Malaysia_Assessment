@@ -1,0 +1,49 @@
+@startuml TaskawayAppComponentDiagram
+title Taskaway App - Component Diagram
+
+package "Presentation Layer" {
+  [TaskListScreen] as TLS
+  [TaskGeneratorScreen] as TGS
+  [Widgets] as W
+}
+
+package "State Management" {
+  [TaskListNotifier] as TLN
+  [Providers] as P
+}
+
+package "Domain Layer" {
+  [Task Model] as TM
+  [Task Repository Interface] as TRI
+}
+
+package "Data Layer" {
+  [Task Repository Implementation] as TR
+  [LocalStorage Service] as LS
+}
+
+package "External Services" {
+  [Supabase API] as SAPI
+  [Groq API] as GAPI
+}
+
+package "Core" {
+  [AppConstants] as AC
+  [ThemeService] as TS
+  [GroqService] as GS
+}
+
+' Component relationships
+TLS --> P : uses
+TGS --> P : uses
+TLS --> W : contains
+TGS --> W : contains
+P --> TLN : exposes
+TLN --> TRI : uses
+TR --> TM : manipulates
+TRI <|-- TR : implements
+TR --> SAPI : calls
+GS --> GAPI : calls
+TGS --> GS : uses
+P --> TM : provides
+@enduml

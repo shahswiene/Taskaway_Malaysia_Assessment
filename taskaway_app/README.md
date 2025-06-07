@@ -93,6 +93,26 @@ State management is handled using Riverpod with the following provider types:
 - AsyncNotifierProvider for asynchronous state
 - NotifierProvider for synchronous state
 
+## UML Diagrams
+
+The project includes several UML diagrams to help understand the architecture and flow:
+
+### Class Diagram
+![Class Diagram](../taskaway_app_uml/TaskawayAppClassDiagram.png)
+
+### Component Diagram
+![Component Diagram](../taskaway_app_uml/TaskawayAppComponentDiagram.png)
+
+### State Flow Diagram
+![State Flow Diagram](../taskaway_app_uml/TaskawayAppStateFlow.png)
+
+### Sequence Diagrams
+- Task Creation Flow
+![Task Sequence Diagram](../taskaway_app_uml/TaskawayAppSequenceDiagram.png)
+
+- AI Task Breakdown Flow
+![AI Task Sequence Diagram](../taskaway_app_uml/TaskawayAppAISequence.png)
+
 ## Setup Instructions
 
 ### 1. Clone the repository

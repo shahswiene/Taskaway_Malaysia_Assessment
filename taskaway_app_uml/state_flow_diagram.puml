@@ -1,0 +1,55 @@
+@startuml TaskawayAppStateFlow
+title Taskaway App - State Management Flow
+
+package "User Interaction" {
+  [User Actions] as UA
+}
+
+package "UI Components" {
+  [Screens] as SC
+  [Widgets] as WI
+}
+
+package "State Management (Riverpod)" {
+  [StateProviders] as SP
+  [Notifiers] as NO
+  [AsyncValue States] as AV
+}
+
+package "Data Access" {
+  [Repository Layer] as RL
+  [External Services] as ES
+}
+
+UA --> SC : triggers
+SC --> WI : contains
+SC --> SP : reads from
+SC --> NO : calls methods on
+SP --> AV : wraps data in
+NO --> AV : updates
+NO --> RL : uses
+RL --> ES : interacts with
+AV --> WI : provides state to
+AV --> SC : provides state to
+
+note right of AV
+  AsyncValue<T> can be:
+  - loading()
+  - error(e, stack)
+  - data(value)
+end note
+
+note right of SP
+  Key Providers:
+  - tasksProvider
+  - filteredTasksProvider
+  - taskFilterProvider
+  - taskGenerationStateProvider
+end note
+
+note right of NO
+  Notifiers:
+  - TaskListNotifier (AsyncNotifier)
+end note
+
+@enduml

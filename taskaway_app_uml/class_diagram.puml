@@ -1,0 +1,135 @@
+@startuml TaskawayAppClassDiagram
+title Taskaway App - Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam monochrome false
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam roundCorner 8
+
+' Models
+package "Core" {
+  class AppConstants {
+    + {static} String supabaseUrl
+    + {static} String supabaseAnonKey
+    + {static} String groqApiKey
+  }
+  
+  class GroqService {
+    + {static} Future<List<String>> generateTasksFromDescription(String description)
+  }
+  
+  class ThemeService {
+    + Future<bool> isDarkMode()
+    + Future<void> setDarkMode(bool value)
+  }
+}
+
+package "Features::Tasks::Data" {
+  class Task <<freezed>> {
+    + String id
+    + String title
+    + bool isCompleted
+    + DateTime createdAt
+    + DateTime updatedAt
+    + bool isDeleted
+    + Task copyWith()
+    + {static} Task fromJson(Map<String, dynamic> json)
+    + Map<String, dynamic> toJson()
+  }
+  
+  interface TaskRepository {
+    + Future<List<Task>> getTasks()
+    + Future<void> addTask(Task task)
+    + Future<void> updateTask(Task task)
+    + Future<void> deleteTask(String id)
+    + Future<void> toggleTaskCompletion(String id, bool isCompleted)
+    + Future<void> permanentlyDeleteTask(String id)
+    + Future<void> restoreTask(String id)
+    + Future<int> cleanupTasks()
+  }
+  
+  class TaskRepositoryImpl implements TaskRepository {
+    - SupabaseClient _client
+    + Future<List<Task>> getTasks()
+    + Future<void> addTask(Task task)
+    + Future<void> updateTask(Task task)
+    + Future<void> deleteTask(String id)
+    + Future<void> toggleTaskCompletion(String id, bool isCompleted)
+    + Future<void> permanentlyDeleteTask(String id)
+    + Future<void> restoreTask(String id)
+    + Future<int> cleanupTasks()
+  }
+}
+
+package "Features::Tasks::Presentation" {
+  class TaskListNotifier extends AsyncNotifier {
+    - TaskRepository _taskRepository
+    + Future<List<Task>> build()
+    + Future<void> refreshTasks()
+    + Future<void> addTask(String title)
+    + Future<void> updateTask(Task task)
+    + Future<void> deleteTask(String id)
+    + Future<void> toggleTaskCompletion(String id)
+    + Future<void> permanentlyDeleteTask(String id)
+    + Future<void> restoreTask(String id)
+  }
+  
+  class TaskListScreen {
+    + Widget build(BuildContext context)
+  }
+  
+  class TaskGeneratorScreen {
+    + Widget build(BuildContext context)
+    - Future<void> _generateTasks()
+    - Future<void> _addSelectedTasks()
+  }
+  
+  enum TaskFilter {
+    all
+    active
+    completed
+    deleted
+  }
+}
+
+' Providers
+package "Features::Tasks::Providers" {
+  class "tasksProvider" as tasksProvider {
+    + AsyncValue<List<Task>>
+  }
+  
+  class "filteredTasksProvider" as filteredTasksProvider {
+    + AsyncValue<List<Task>>
+  }
+  
+  class "taskFilterProvider" as taskFilterProvider {
+    + TaskFilter
+  }
+  
+  class "taskGenerationStateProvider" as taskGenerationStateProvider {
+    + AsyncValue<List<String>>
+  }
+  
+  class "taskRepositoryProvider" as taskRepositoryProvider {
+    + TaskRepository
+  }
+}
+
+' Relationships
+TaskRepositoryImpl --> Task : creates/updates/deletes
+TaskListNotifier --> TaskRepository : uses
+TaskListScreen --> tasksProvider : consumes
+TaskListScreen --> filteredTasksProvider : consumes
+TaskListScreen --> TaskFilter : uses
+TaskListScreen --> TaskGeneratorScreen : navigates to
+TaskGeneratorScreen --> GroqService : uses
+TaskGeneratorScreen --> taskGenerationStateProvider : manages
+taskFilterProvider --> TaskFilter : provides
+filteredTasksProvider --> tasksProvider : depends on
+filteredTasksProvider --> taskFilterProvider : depends on
+tasksProvider --> TaskListNotifier : exposes
+taskRepositoryProvider --> TaskRepositoryImpl : provides
+TaskListNotifier ..> TaskRepository : depends on
+@enduml

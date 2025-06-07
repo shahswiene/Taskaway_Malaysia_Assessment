@@ -1,0 +1,40 @@
+@startuml TaskawayAppAISequence
+title Taskaway App - AI Task Generation Sequence Diagram
+
+actor User
+participant "TaskListScreen" as TLS
+participant "TaskGeneratorScreen" as TGS
+participant "GroqService" as GS
+participant "Groq API" as GA
+participant "TaskListNotifier" as TLN
+participant "TaskRepositoryImpl" as TR
+participant "Supabase" as SB
+
+User -> TLS : Taps "Smart Task Generator" button
+TLS -> TGS : Navigates to
+TGS -> User : Shows description input field
+User -> TGS : Enters task description
+User -> TGS : Taps "Generate Tasks" button
+TGS -> TGS : Sets loading state
+TGS -> GS : generateTasksFromDescription(description)
+GS -> GA : Sends API request
+GA -> GS : Returns response with task list
+GS -> TGS : Returns parsed tasks
+TGS -> TGS : Displays tasks with checkboxes
+User -> TGS : Selects tasks to add
+User -> TGS : Taps "Add Selected Tasks"
+TGS -> TR : addTask() for each selected task
+TR -> SB : Insert tasks
+SB -> TR : Success response
+TGS -> TGS : Clears task generation state
+TGS -> TLS : Returns to task list
+TGS -> User : Shows success message
+TLS -> TLN : refreshTasks()
+TLN -> TR : getTasks()
+TR -> SB : Select tasks
+SB -> TR : Returns tasks data
+TR -> TLN : Returns tasks list
+TLN -> TLS : Updates UI with new tasks
+TLS -> User : Shows updated task list with AI generated tasks
+
+@enduml

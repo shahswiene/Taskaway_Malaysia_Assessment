@@ -1,0 +1,28 @@
+@startuml TaskawayAppSequenceDiagram
+title Taskaway App - Task Creation Sequence Diagram
+
+actor User
+participant "TaskListScreen" as TLS
+participant "TaskListNotifier" as TLN
+participant "TaskRepositoryImpl" as TR
+participant "Supabase" as SB
+
+User -> TLS : Taps "Add Task" button
+TLS -> TLS : Shows add task dialog
+User -> TLS : Enters task title and submits
+TLS -> TLN : addTask(title)
+TLN -> TLN : state = AsyncValue.loading()
+TLN -> TR : addTask(task)
+TR -> SB : insert task data
+SB -> TR : success response
+TR -> TLN : returns success
+TLN -> TLN : refreshTasks()
+TLN -> TR : getTasks()
+TR -> SB : select tasks
+SB -> TR : returns tasks data
+TR -> TLN : returns tasks list
+TLN -> TLN : state = AsyncValue.data(tasks)
+TLN -> TLS : updates UI with new task list
+TLS -> User : Shows updated tasks
+
+@enduml

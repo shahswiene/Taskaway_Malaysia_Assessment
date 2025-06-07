@@ -1,9 +1,11 @@
-# Ignore files outside taskaway_app
+# Ignore files outside taskaway_app and taskaway_app_uml
 /*
 
 # But not these files/folders
 !.gitignore
 !taskaway_app/
+!taskaway_app_uml/
 
-# Don't ignore anything inside taskaway_app
+# Don't ignore anything inside these directories
 !taskaway_app/**
+!taskaway_app_uml/**
