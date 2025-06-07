@@ -1,0 +1,6 @@
+# Ignore everything
+*
+
+# But not these files/folders
+!.gitignore
+!taskaway_app/
