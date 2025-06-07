@@ -96,7 +96,8 @@ State management is handled using Riverpod with the following provider types:
 ## Demo Video
 
 A demonstration video of the application in action is available in the repository root:
-- [Demo Video](../demo_taskaway.mp4)
+- [Demo Video]
+- https://github.com/shahswiene/Taskaway_Malaysia_Assessment/blob/master/demo_taskaway.mp4
 
 ## UML Diagrams
 
