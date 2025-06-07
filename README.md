@@ -47,7 +47,7 @@ For detailed setup instructions, please refer to the [taskaway_app README](./tas
 ## Demo
 
 A video demonstration of the application is available in the repository:
-- [Demo Video](./demo_taskaway.mov)
+- [Demo Video](https://github.com/shahswiene/Taskaway_Malaysia_Assessment/blob/master/demo_taskaway.mov)
 
 ## UML Diagrams
 
