@@ -93,6 +93,11 @@ State management is handled using Riverpod with the following provider types:
 - AsyncNotifierProvider for asynchronous state
 - NotifierProvider for synchronous state
 
+## Demo Video
+
+A demonstration video of the application in action is available in the repository root:
+- [Demo Video](../demo_taskaway.mp4)
+
 ## UML Diagrams
 
 The project includes several UML diagrams to help understand the architecture and flow:
