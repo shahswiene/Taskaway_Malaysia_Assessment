@@ -5,7 +5,7 @@
 !.gitignore
 !taskaway_app/
 !taskaway_app_uml/
-!demo_taskaway.mp4
+!demo_taskaway.mov
 
 # Don't ignore anything inside these directories
 !taskaway_app/**
