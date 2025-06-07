@@ -21,7 +21,8 @@ This repository contains my submission for the Taskaway Malaysia Assessment, a F
   - Sequence diagrams
   - State flow diagrams
 
-- **`demo_taskaway.mov`**: Video demonstration of the application
+- **`demo_taskaway.mov`**: Video demonstration of the application in mov format
+- **`demo_taskaway.mp4`**: Video demonstration of the application in mp4 format
 
 ## Key Features
 
@@ -47,7 +48,8 @@ For detailed setup instructions, please refer to the [taskaway_app README](./tas
 ## Demo
 
 A video demonstration of the application is available in the repository:
-- [Demo Video](https://github.com/shahswiene/Taskaway_Malaysia_Assessment/blob/master/demo_taskaway.mov)
+- [Demo Video mov](./demo_taskaway.mov)
+- [Demo Video mp4](./demo_taskaway.mp4)
 
 ## UML Diagrams
 
